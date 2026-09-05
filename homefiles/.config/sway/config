@@ -1,0 +1,34 @@
+# ~/.config/sway/config
+# Entry point for the user's Sway configuration.
+# System-level drop-ins (session env export, optional system defaults) are
+# sourced first, then the user's own conf.d snippets in numbered order.
+
+# ── Variables ─────────────────────────────────────────────────────────────────
+set $mod      Mod4
+set $alt      Mod1
+set $term     ghostty
+set $browser  firefox
+set $file_manager  nautilus --new-window
+set $menu     wofi --show drun --allow-images
+set $scripts  /usr/share/sway/scripts
+set $lock     $scripts/lock.sh
+
+set $ws1 "1"
+set $ws2 "2"
+set $ws3 "3"
+set $ws4 "4"
+set $ws5 "5"
+set $ws6 "6"
+set $ws7 "7"
+set $ws8 "8"
+set $ws9 "9"
+
+# ── System drop-ins (session env, image-level overrides) ─────────────────────
+include /etc/sway/config-vars.d/*
+include /etc/sway/config.d/*
+
+# ── Theme ─────────────────────────────────────────────────────────────────────
+include themes/catppuccin-mocha
+
+# ── User conf.d snippets ──────────────────────────────────────────────────────
+include conf.d/*.conf

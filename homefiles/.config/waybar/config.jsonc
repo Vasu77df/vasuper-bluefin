@@ -1,0 +1,185 @@
+{
+  "layer": "top",
+  "position": "top",
+  "height": 32,
+  "spacing": 0,
+  "margin-top": 4,
+  "margin-left": 6,
+  "margin-right": 6,
+
+  "modules-left": [
+    "custom/launcher",
+    "sway/workspaces",
+    "sway/mode",
+    "sway/scratchpad",
+    "sway/window"
+  ],
+  "modules-center": [
+    "clock"
+  ],
+  "modules-right": [
+    "idle_inhibitor",
+    "custom/notifications",
+    "network",
+    "bluetooth",
+    "cpu",
+    "temperature",
+    "memory",
+    "wireplumber",
+    "backlight",
+    "battery",
+    "tray",
+    "custom/power"
+  ],
+
+  "custom/launcher": {
+    "format": "󰣇",
+    "on-click": "wofi --show drun --allow-images",
+    "tooltip": false
+  },
+
+  "sway/workspaces": {
+    "disable-scroll": false,
+    "all-outputs": true,
+    "warp-on-scroll": false,
+    "format": "{name}",
+    "persistent-workspaces": {
+      "1": [], "2": [], "3": [],
+      "4": [], "5": [], "6": [],
+      "7": [], "8": [], "9": []
+    }
+  },
+
+  "sway/mode": {
+    "format": "󰏫 {}",
+    "max-length": 20
+  },
+
+  "sway/scratchpad": {
+    "format": "󰏖 {count}",
+    "show-empty": false,
+    "tooltip-format": "{app}: {title}"
+  },
+
+  "sway/window": {
+    "format": "{title}",
+    "max-length": 48,
+    "separate-outputs": true,
+    "tooltip": false
+  },
+
+  "clock": {
+    "interval": 60,
+    "format": "󰥔 {:%a %b %d  %H:%M}",
+    "format-alt": "󰃭 {:%Y-%m-%d  %H:%M}",
+    "tooltip-format": "<tt><small>{calendar}</small></tt>",
+    "on-click": "gnome-calendar"
+  },
+
+  "idle_inhibitor": {
+    "format": "{icon}",
+    "format-icons": {
+      "activated": "󰈈",
+      "deactivated": "󰈉"
+    },
+    "tooltip-format-activated": "Idle inhibition enabled",
+    "tooltip-format-deactivated": "Idle inhibition disabled"
+  },
+
+  "custom/notifications": {
+    "exec": "/usr/share/sway/scripts/notification-status.sh",
+    "return-type": "json",
+    "interval": "once",
+    "signal": 9,
+    "on-click": "/usr/share/sway/scripts/notification-toggle.sh",
+    "on-click-middle": "makoctl dismiss --all",
+    "on-click-right": "makoctl restore"
+  },
+
+  "network": {
+    "interval": 3,
+    "format-wifi": "󰤨 {signalStrength}%",
+    "format-ethernet": "󰈀",
+    "format-linked": "󰈀",
+    "format-disconnected": "󰤭",
+    "tooltip-format-wifi": "{essid}\n{ipaddr}/{cidr}\nDown {bandwidthDownBits}  Up {bandwidthUpBits}",
+    "tooltip-format-ethernet": "{ifname}\n{ipaddr}/{cidr}\nDown {bandwidthDownBits}  Up {bandwidthUpBits}",
+    "on-click": "nm-connection-editor"
+  },
+
+  "bluetooth": {
+    "format": "󰂯",
+    "format-disabled": "󰂲",
+    "format-off": "󰂲",
+    "format-on": "󰂯",
+    "format-connected": "󰂱 {num_connections}",
+    "on-click": "blueman-manager"
+  },
+
+  "cpu": {
+    "interval": 3,
+    "format": "󰍛 {usage}%",
+    "tooltip": false,
+    "on-click": "gnome-system-monitor"
+  },
+
+  "temperature": {
+    "hwmon-path-abs": "/sys/devices/platform/coretemp.0",
+    "input-filename": "temp1_input",
+    "critical-threshold": 85,
+    "interval": 3,
+    "format": "󰔏 {temperatureC}°C",
+    "format-critical": "󰸁 {temperatureC}°C",
+    "tooltip": false
+  },
+
+  "memory": {
+    "interval": 5,
+    "format": "󰘚 {percentage}%",
+    "states": { "warning": 75, "critical": 90 },
+    "on-click": "gnome-system-monitor"
+  },
+
+  "wireplumber": {
+    "format": "{icon} {volume}%",
+    "format-muted": "󰖁 muted",
+    "format-icons": ["󰕿", "󰖀", "󰕾"],
+    "scroll-step": 2.0,
+    "max-volume": 125,
+    "on-click": "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle",
+    "on-click-right": "pavucontrol",
+    "tooltip-format": "{node_name}"
+  },
+
+  "backlight": {
+    "device": "intel_backlight",
+    "format": "󰃠 {percent}%",
+    "on-scroll-up":   "brightnessctl --class=backlight set +5%",
+    "on-scroll-down": "brightnessctl --class=backlight set 5%-",
+    "tooltip": false
+  },
+
+  "battery": {
+    "bat": "BAT0",
+    "adapter": "AC",
+    "interval": 10,
+    "states": { "warning": 30, "critical": 15 },
+    "format": "{icon} {capacity}%",
+    "format-charging": "󰂄 {capacity}%",
+    "format-plugged":  "󰂄 {capacity}%",
+    "format-full":     "󰁹 {capacity}%",
+    "format-icons": ["󰁺","󰁻","󰁼","󰁽","󰁾","󰁿","󰂀","󰂁","󰂂","󰁹"],
+    "tooltip-format": "{timeTo}  {power} W"
+  },
+
+  "tray": {
+    "icon-size": 16,
+    "spacing": 7
+  },
+
+  "custom/power": {
+    "format": "󰐥",
+    "on-click": "/usr/share/sway/scripts/power-menu.sh",
+    "tooltip": false
+  }
+}

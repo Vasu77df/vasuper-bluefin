@@ -1,0 +1,14 @@
+allow_images=true
+image_size=24
+width=520
+height=460
+location=center
+insensitive=true
+mode=drun
+columns=1
+lines=10
+prompt=Search
+hide_scroll=true
+no_actions=true
+allow_markup=true
+term=ghostty

@@ -1,0 +1,24 @@
+profile undocked {
+    output eDP-1 enable mode 1920x1200@60.001Hz position 0,0 scale 1.0
+}
+
+profile docked-dp3 {
+    output DP-3 enable mode 2560x1440@59.951Hz position 0,0    scale 1.0
+    output DP-1 enable mode 2560x1440@59.951Hz position 2560,0 scale 1.0
+    output eDP-1 enable mode 1920x1200@60.001Hz position 5120,0 scale 1.0
+    exec ~/.config/sway/scripts/workspace-profile.sh DP-3
+}
+
+profile docked-dp5 {
+    output DP-5 enable mode 2560x1440@59.951Hz position 0,0    scale 1.0
+    output DP-1 enable mode 2560x1440@59.951Hz position 2560,0 scale 1.0
+    output eDP-1 enable mode 1920x1200@60.001Hz position 5120,0 scale 1.0
+    exec ~/.config/sway/scripts/workspace-profile.sh DP-5
+}
+
+profile docked-dp6 {
+    output DP-6 enable mode 2560x1440@59.951Hz position 0,0    scale 1.0
+    output DP-1 enable mode 2560x1440@59.951Hz position 2560,0 scale 1.0
+    output eDP-1 enable mode 1920x1200@60.001Hz position 5120,0 scale 1.0
+    exec ~/.config/sway/scripts/workspace-profile.sh DP-6
+}
