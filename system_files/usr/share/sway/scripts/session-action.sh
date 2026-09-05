@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-lock_script="${HOME}/.config/sway/scripts/lock.sh"
+lock_script="/usr/share/sway/scripts/lock.sh"
 
 case "${1:-}" in
     lock)

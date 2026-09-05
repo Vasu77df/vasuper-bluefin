@@ -6,7 +6,7 @@ if pgrep -u "$UID" -x swaynag >/dev/null 2>&1; then
     exit 0
 fi
 
-action="${HOME}/.config/sway/scripts/session-action.sh"
+action="/usr/share/sway/scripts/session-action.sh"
 
 exec swaynag \
     --type warning \

@@ -4,7 +4,7 @@
 # is passed (e.g. after swaymsg reload).
 set -u
 
-scripts_dir="${HOME}/.config/sway/scripts"
+scripts_dir="/usr/share/sway/scripts"
 restart_managed=false
 
 if [[ "${1:-}" == "--restart-managed" ]]; then

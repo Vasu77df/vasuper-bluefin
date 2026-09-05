@@ -1,3 +1,191 @@
+# Vasuper Sway Spin — Bluefin
+
+A personal custom [Bluefin-DX](https://github.com/ublue-os/bluefin) image layering a full
+[Sway](https://swaywm.org) tiling WM setup on top of the stock Bluefin GNOME desktop.
+Both sessions coexist — pick Sway or GNOME at the GDM login screen.
+
+![Screenshot](screenshot.png)
+
+---
+
+## What this image adds
+
+### Base image
+- `ghcr.io/ublue-os/bluefin-dx:stable-daily` — Fedora Atomic + GNOME + developer tooling
+
+### Sway compositor stack
+| Package | Purpose |
+|---|---|
+| `sway` | Wayland tiling compositor (i3-compatible) |
+| `swaybg` | Wallpaper renderer |
+| `swayidle` | Idle management (screen lock + display off) |
+| `swaylock` | Lock screen |
+| `swaynag` | Confirmation dialogs (power menu) |
+
+### Wayland tooling
+| Package | Purpose |
+|---|---|
+| `waybar` | Status bar |
+| `mako` | Notification daemon |
+| `wofi` | App launcher |
+| `kanshi` | Automatic display profile switching |
+| `wdisplays` | GUI display management |
+| `grim` + `slurp` | Screenshot capture |
+| `xdg-desktop-portal-wlr` | wlroots portal (screen share, file picker) |
+
+### Audio & system control
+| Package | Purpose |
+|---|---|
+| `pamixer` | CLI volume control (used by keybindings) |
+| `pavucontrol` | GUI audio mixer |
+| `brightnessctl` | Backlight control |
+| `network-manager-applet` | Network tray icon |
+| `blueman` | Bluetooth tray icon |
+
+### Terminal & dev tools
+| Package | Purpose |
+|---|---|
+| `ghostty` | GPU-accelerated terminal (via scottames/ghostty COPR) |
+| `shellcheck` | Shell script linter |
+
+### Theme
+- **Catppuccin Mocha** across all components — Sway borders, Waybar, Mako,
+  Wofi, Swaylock
+- **IosevkaTerm Nerd Font** for bar and terminal
+
+---
+
+## Sway session layout
+
+```
+/usr/share/sway/scripts/     ← immutable system scripts (updated with every image rebase)
+  session-start.sh           starts mako, nm-applet, kanshi, swayidle once per session
+  session-action.sh          lock / suspend / logout / reboot / poweroff
+  lock.sh                    swaylock with wallpaper + Catppuccin config
+  power-menu.sh              swaynag power menu (Super+Shift+P)
+  screenshot.sh              full / area / window capture → ~/Pictures/Screenshots/
+  notification-toggle.sh     toggle mako do-not-disturb + signal waybar
+  notification-status.sh     JSON status for waybar custom/notifications module
+  notification-action.sh     pipe mako actions through wofi dmenu
+  focused-window.sh          inspect + clipboard-copy focused window metadata
+
+/etc/sway/config-vars.d/     ← system drop-ins sourced by every user's Sway config
+  10-session.conf            exports Wayland/D-Bus session environment
+
+/usr/share/wayland-sessions/
+  sway.desktop               GDM session entry (alongside GNOME)
+
+/etc/skel/.config/           ← seeded into ~/ for every new user at account creation
+  sway/config                main config — sources system drop-ins, theme, conf.d/*
+  sway/themes/catppuccin-mocha
+  sway/conf.d/
+    10-input.conf            keyboard repeat rate, touchpad tap + natural scroll
+    20-outputs.conf          eDP-1 fallback + workspace→output affinity
+    30-appearance.conf       borders, gaps, window colors, wallpaper, waybar
+    40-keybindings.conf      full keybinding set (mod = Super)
+    50-window-rules.conf     floating rules: dialogs, Zoom, Slack, PiP, auth prompts
+    60-autostart.conf        exec session-start.sh
+  waybar/config.jsonc        workspaces, clock, network, bt, cpu, mem, audio, battery
+  waybar/mocha.css           Catppuccin Mocha palette
+  waybar/style.css           bar styling
+  mako/config                notifications with do-not-disturb mode
+  wofi/config + style.css    launcher
+  swaylock/config            lock screen colors
+  kanshi/config              undocked + docked-dp3/5/6 display profiles
+  ghostty/config             terminal — Catppuccin Mocha, IosevkaTerm, alt+hjkl splits
+```
+
+---
+
+## Keybindings (mod = Super)
+
+| Binding | Action |
+|---|---|
+| `Super+T` | Open terminal (ghostty) |
+| `Super+D` / `Super+Space` | App launcher (wofi) |
+| `Super+Shift+B` | Browser (firefox) |
+| `Super+Ctrl+F` | File manager (nautilus) |
+| `Super+Shift+Q` | Close window |
+| `Super+H/J/K/L` | Focus left/down/up/right |
+| `Super+Shift+H/J/K/L` | Move window |
+| `Super+R` | Resize mode |
+| `Super+F` | Fullscreen |
+| `Super+Shift+F` | Toggle floating |
+| `Super+1-9` | Switch workspace |
+| `Super+Shift+1-9` | Move container to workspace |
+| `Super+Escape` | Lock screen |
+| `Super+Shift+P` | Power menu |
+| `Super+Shift+C` | Reload Sway config |
+| `Print` | Screenshot (full) |
+| `Shift+Print` | Screenshot (area select) |
+| `Ctrl+Print` | Screenshot (focused window) |
+| `Super+N` | Dismiss notification |
+| `Super+Ctrl+N` | Toggle do-not-disturb |
+| `XF86AudioRaiseVolume/LowerVolume/Mute` | Volume control |
+| `XF86MonBrightnessUp/Down` | Backlight control |
+
+---
+
+## First login after rebasing
+
+The sway configs land in `~/.config/` automatically for new accounts.
+For your **existing** user account, copy them once:
+
+```bash
+cp -r /etc/skel/.config/sway ~/.config/
+cp -r /etc/skel/.config/waybar ~/.config/
+cp -r /etc/skel/.config/mako ~/.config/
+cp -r /etc/skel/.config/wofi ~/.config/
+cp -r /etc/skel/.config/swaylock ~/.config/
+cp -r /etc/skel/.config/kanshi ~/.config/
+cp -r /etc/skel/.config/ghostty ~/.config/
+
+# Drop your wallpaper in place
+cp ~/Pictures/your-wallpaper.png ~/.config/sway/wallpaper.png
+```
+
+Then log out, select **Sway** at GDM, and log back in.
+
+---
+
+## Building and testing locally
+
+```bash
+# Build the container image
+just build
+
+# Convert to QCOW2 and boot a VM (opens http://localhost:8006)
+just run-vm
+
+# Rebuild everything from scratch
+just rebuild-vm
+
+# Wipe output and start fresh
+just clean
+```
+
+## Rebasing your machine
+
+```bash
+# Rebase to the published image
+sudo rpm-ostree rebase ostree-unverified-registry:ghcr.io/Vasu77df/vasuper-bluefin:latest
+systemctl reboot
+
+# Or rebase to a locally built image for testing
+sudo rpm-ostree rebase ostree-unverified-image:containers-storage:localhost/vasuper-bluefin:latest
+systemctl reboot
+
+# Roll back if needed
+sudo rpm-ostree rollback
+systemctl reboot
+
+# Update to latest published image
+ujust update
+```
+
+---
+---
+
 # image-template
 
 This repository is meant to be a template for building your own custom [bootc](https://github.com/bootc-dev/bootc) image. This template is the recommended way to make customizations to any image published by the Universal Blue Project.
