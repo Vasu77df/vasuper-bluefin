@@ -160,8 +160,8 @@
   },
 
   "battery": {
-    "bat": "BAT0",
-    "adapter": "AC",
+    "bat": "BATT",
+    "adapter": "ACAD",
     "interval": 10,
     "states": { "warning": 30, "critical": 15 },
     "format": "{icon} {capacity}%",
