@@ -40,10 +40,15 @@ button:hover {
 }
 
 #custom-launcher {
-  min-width: 32px;
+  min-width: 36px;
+  padding: 0 6px;
   color: @crust;
   background: @blue;
   border-radius: 5px 0 0 5px;
+}
+
+#custom-launcher img {
+  filter: brightness(0) invert(1);
 }
 
 #workspaces button {

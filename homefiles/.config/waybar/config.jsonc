@@ -33,7 +33,7 @@
   ],
 
   "custom/launcher": {
-    "format": "󰣇",
+    "format": "<img src='/usr/share/icons/hicolor/scalable/actions/ublue-logo-symbolic.svg' style='height:16px;margin-top:3px;'/>",
     "on-click": "wofi --show drun --allow-images",
     "tooltip": false
   },
