@@ -47,10 +47,6 @@ button:hover {
   border-radius: 5px 0 0 5px;
 }
 
-#custom-launcher img {
-  filter: brightness(0) invert(1);
-}
-
 #workspaces button {
   min-width: 26px;
   padding: 0 4px;

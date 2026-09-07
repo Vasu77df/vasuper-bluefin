@@ -33,7 +33,9 @@
   ],
 
   "custom/launcher": {
-    "format": "<img src='/usr/share/icons/hicolor/scalable/actions/ublue-logo-symbolic.svg' style='height:16px;margin-top:3px;'/>",
+    "format": "",
+    "image-name": "ublue-logo-symbolic",
+    "icon-size": 18,
     "on-click": "wofi --show drun --allow-images",
     "tooltip": false
   },
