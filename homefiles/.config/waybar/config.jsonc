@@ -33,9 +33,7 @@
   ],
 
   "custom/launcher": {
-    "format": "",
-    "image-name": "ublue-logo-symbolic",
-    "icon-size": 18,
+    "format": "󰣛",
     "on-click": "wofi --show drun --allow-images",
     "tooltip": false
   },

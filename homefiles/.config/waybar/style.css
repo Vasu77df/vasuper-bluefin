@@ -40,8 +40,7 @@ button:hover {
 }
 
 #custom-launcher {
-  min-width: 36px;
-  padding: 0 6px;
+  min-width: 32px;
   color: @crust;
   background: @blue;
   border-radius: 5px 0 0 5px;
