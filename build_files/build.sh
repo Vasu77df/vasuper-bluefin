@@ -17,6 +17,7 @@ cp -avf "/ctx/system_files"/. /
 # 2. External repositories
 ###############################################################################
 dnf5 copr enable -y scottames/ghostty
+dnf5 config-manager addrepo --from-repofile=https://download.opensuse.org/repositories/system:systemd/Fedora_44/system:systemd.repo
 
 ###############################################################################
 # 3. Package installation
@@ -28,51 +29,54 @@ dnf5 copr enable -y scottames/ghostty
 #   tmux, jetbrains-mono-fonts, jq, rsync
 ###############################################################################
 dnf5 install -y \
-    \
-    `# ── Sway compositor and core WM tools ──` \
-    sway \
-    swaybg \
-    swayidle \
-    swaylock \
-    swaynag \
-    \
-    `# ── Wayland bar and notification daemon ──` \
-    waybar \
-    mako \
-    \
-    `# ── App launcher ──` \
-    wofi \
-    \
-    `# ── Output / display management ──` \
-    kanshi \
-    wdisplays \
-    \
-    `# ── Screenshot tools ──` \
-    grim \
-    slurp \
-    \
-    `# ── Desktop portal for wlroots compositors ──` \
-    xdg-desktop-portal-wlr \
-    \
-    `# ── PolicyKit daemon ──` \
-    polkit \
-    \
-    `# ── Audio control tools ──` \
-    pamixer \
-    pavucontrol \
-    \
-    `# ── Backlight control ──` \
-    brightnessctl \
-    \
-    `# ── System tray applets ──` \
-    network-manager-applet \
-    blueman \
-    \
-    `# ── Terminal emulator (via COPR) ──` \
-    ghostty \
-    \
-    `# ── Dev / quality-of-life ──` \
-    shellcheck
+  \
+  `# ── Sway compositor and core WM tools ──` \
+  sway \
+  swaybg \
+  swayidle \
+  swaylock \
+  swaynag \
+  \
+  `# ── Wayland bar and notification daemon ──` \
+  waybar \
+  mako \
+  \
+  `# ── App launcher ──` \
+  wofi \
+  \
+  `# ── Output / display management ──` \
+  kanshi \
+  wdisplays \
+  \
+  `# ── Screenshot tools ──` \
+  grim \
+  slurp \
+  \
+  `# ── Desktop portal for wlroots compositors ──` \
+  xdg-desktop-portal-wlr \
+  \
+  `# ── PolicyKit daemon ──` \
+  polkit \
+  \
+  `# ── Audio control tools ──` \
+  pamixer \
+  pavucontrol \
+  \
+  `# ── Backlight control ──` \
+  brightnessctl \
+  \
+  `# ── System tray applets ──` \
+  network-manager-applet \
+  blueman \
+  \
+  `# ── Terminal emulator (via COPR) ──` \
+  ghostty \
+  \
+  `# ── Dev / quality-of-life ──` \
+  shellcheck \
+  \
+  `# ── Dev / building system extensions and oses ──` \
+  mkosi
 
 # Disable COPR repos so they don't remain enabled in the image
 dnf5 copr disable -y scottames/ghostty
@@ -85,16 +89,16 @@ dnf5 clean all
 ###############################################################################
 # 5. System-wide environment variables
 ###############################################################################
-grep -qxF 'XDG_CURRENT_DESKTOP=sway'       /etc/environment \
-    || echo 'XDG_CURRENT_DESKTOP=sway'       >> /etc/environment
-grep -qxF 'XDG_SESSION_TYPE=wayland'        /etc/environment \
-    || echo 'XDG_SESSION_TYPE=wayland'       >> /etc/environment
-grep -qxF 'MOZ_ENABLE_WAYLAND=1'            /etc/environment \
-    || echo 'MOZ_ENABLE_WAYLAND=1'           >> /etc/environment
-grep -qxF 'QT_QPA_PLATFORM=wayland'         /etc/environment \
-    || echo 'QT_QPA_PLATFORM=wayland'        >> /etc/environment
-grep -qxF '_JAVA_AWT_WM_NONREPARENTING=1'   /etc/environment \
-    || echo '_JAVA_AWT_WM_NONREPARENTING=1'  >> /etc/environment
+grep -qxF 'XDG_CURRENT_DESKTOP=sway' /etc/environment ||
+  echo 'XDG_CURRENT_DESKTOP=sway' >>/etc/environment
+grep -qxF 'XDG_SESSION_TYPE=wayland' /etc/environment ||
+  echo 'XDG_SESSION_TYPE=wayland' >>/etc/environment
+grep -qxF 'MOZ_ENABLE_WAYLAND=1' /etc/environment ||
+  echo 'MOZ_ENABLE_WAYLAND=1' >>/etc/environment
+grep -qxF 'QT_QPA_PLATFORM=wayland' /etc/environment ||
+  echo 'QT_QPA_PLATFORM=wayland' >>/etc/environment
+grep -qxF '_JAVA_AWT_WM_NONREPARENTING=1' /etc/environment ||
+  echo '_JAVA_AWT_WM_NONREPARENTING=1' >>/etc/environment
 
 ###############################################################################
 # 6. Seed /etc/skel with the default home config tree
