@@ -17,8 +17,6 @@ cp -avf "/ctx/system_files"/. /
 # 2. External repositories
 ###############################################################################
 dnf5 copr enable -y scottames/ghostty
-dnf5 config-manager addrepo --from-repofile=https://download.opensuse.org/repositories/system:systemd/Fedora_44/system:systemd.repo
-
 ###############################################################################
 # 3. Package installation
 #
