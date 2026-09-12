@@ -76,6 +76,8 @@ dnf5 install -y \
   `# ── Dev / building system extensions and oses ──` \
   mkosi
 
+# Quick check if mkosi is indeed installed
+echo "mkosi binary location: $(command -v mkosi)"
 # Disable COPR repos so they don't remain enabled in the image
 dnf5 copr disable -y scottames/ghostty
 
