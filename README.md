@@ -4,7 +4,7 @@ A personal custom [Bluefin-DX](https://github.com/ublue-os/bluefin) image layeri
 [Sway](https://swaywm.org) tiling WM setup on top of the stock Bluefin GNOME desktop.
 Both sessions coexist — pick Sway or GNOME at the GDM login screen.
 
-![Screenshot](screenshot.png)
+![Sway desktop on three monitors — Catppuccin Mocha, Waybar, Ghostty](screenshot.jpg)
 
 ---
 
