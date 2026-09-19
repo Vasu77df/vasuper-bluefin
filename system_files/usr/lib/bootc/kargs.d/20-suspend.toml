@@ -1,0 +1,4 @@
+# Prefer s2idle over ACPI S3 (deep). On this hardware (HP Dev One + SK hynix
+# PC711), deep suspend can leave NVMe/display wedged across reboot — black
+# screen before/in initrd and long LUKS waits.
+kargs = ["mem_sleep_default=s2idle"]
