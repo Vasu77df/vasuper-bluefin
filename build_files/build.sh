@@ -97,6 +97,8 @@ grep -qxF 'MOZ_ENABLE_WAYLAND=1' /etc/environment ||
   echo 'MOZ_ENABLE_WAYLAND=1' >>/etc/environment
 grep -qxF 'QT_QPA_PLATFORM=wayland' /etc/environment ||
   echo 'QT_QPA_PLATFORM=wayland' >>/etc/environment
+grep -qxF 'QT_QPA_PLATFORMTHEME=gtk3' /etc/environment ||
+  echo 'QT_QPA_PLATFORMTHEME=gtk3' >>/etc/environment
 grep -qxF '_JAVA_AWT_WM_NONREPARENTING=1' /etc/environment ||
   echo '_JAVA_AWT_WM_NONREPARENTING=1' >>/etc/environment
 
@@ -109,3 +111,8 @@ cp -avf /ctx/homefiles/. /etc/skel/
 # 7. Enable system-level services
 ###############################################################################
 systemctl enable podman.socket
+
+###############################################################################
+# 8. Compile dconf system defaults (local.d/00-dark-theme)
+###############################################################################
+dconf update
